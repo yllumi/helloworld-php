@@ -1,19 +1,37 @@
-<?php
+<!doctype html>
+<html lang="en">
 
-// show error reporting
-error_reporting(E_ALL);
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
 
-// include connection
-include_once("connection.php");
+<body>
+    <h1>Hello, world!</h1>
 
-// Get data from mahasiswa
-$sql = "SELECT * FROM mahasiswa";
-$result = $connection->query($sql);
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - Name: " . $row["nama"]. " - NIM: " . $row["nim"]. "<br>";
+    <?php
+    // show error reporting
+    error_reporting(E_ALL);
+
+    // include connection
+    include_once("connection.php");
+
+    // Get data from mahasiswa
+    $sql = "SELECT * FROM mahasiswa";
+    $result = $connection->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo "id: " . $row["id"] . " - Name: " . $row["nama"] . " - NIM: " . $row["nim"] . "<br>";
+        }
+    } else {
+        echo "0 results";
     }
-} else {
-    echo "0 results";
-}
+    ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
+
+</html>
