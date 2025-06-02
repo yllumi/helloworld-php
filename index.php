@@ -9,27 +9,31 @@
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <div class="container">
 
-    <?php
-    // show error reporting
-    error_reporting(E_ALL);
+        <h1>Hello, world!</h1>
 
-    // include connection
-    include_once("connection.php");
+        <?php
+        // show error reporting
+        error_reporting(E_ALL);
 
-    // Get data from mahasiswa
-    $sql = "SELECT * FROM mahasiswa";
-    $result = $connection->query($sql);
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while ($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"] . " - Name: " . $row["nama"] . " - NIM: " . $row["nim"] . "<br>";
+        // include connection
+        include_once("connection.php");
+
+        // Get data from mahasiswa
+        $sql = "SELECT * FROM mahasiswa";
+        $result = $connection->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                echo "id: " . $row["id"] . " - Name: " . $row["nama"] . " - NIM: " . $row["nim"] . "<br>";
+            }
+        } else {
+            echo "0 results";
         }
-    } else {
-        echo "0 results";
-    }
-    ?>
+        ?>
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
