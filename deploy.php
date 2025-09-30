@@ -19,7 +19,8 @@ host('prod')
     ->setRemoteUser('deployer')
     ->setPort(22)
     ->set('branch', 'main')
-    ->set('deploy_path', '/var/www/helloworld');
+    ->set('deploy_path', '/var/www/helloworld')
+    ->set('stage', 'prod');
 
 // Tentukan host untuk development
 host('dev')
@@ -27,7 +28,8 @@ host('dev')
     ->setRemoteUser('deployer')
     ->setPort(22)
     ->set('branch', 'dev')
-    ->set('deploy_path', '/var/www/helloworld-dev');
+    ->set('deploy_path', '/var/www/helloworld-dev')
+    ->set('stage', 'dev');
 
 // Hooks
 
