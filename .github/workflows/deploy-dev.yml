@@ -19,6 +19,12 @@ jobs:
     #     tools: composer
     #     extensions: mbstring, intl, curl, zip
 
+    # Install Composer secara manual
+    - name: Install Composer
+      run: |
+        curl -sS https://getcomposer.org/installer | php
+        sudo mv composer.phar /usr/local/bin/composer
+        
     # >>> PENTING: JANGAN --no-dev (agar Deployer terpasang di vendor)
     - name: Install dependencies (with dev)
       run: composer install --prefer-dist --no-progress --no-interaction
