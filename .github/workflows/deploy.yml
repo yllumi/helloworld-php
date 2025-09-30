@@ -2,7 +2,7 @@ name: Deploy (prod)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   workflow_dispatch:
 
 jobs:
@@ -48,4 +48,4 @@ jobs:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
         DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-        BRANCH: ${{ secrets.BRANCH }}
+        BRANCH: ${{ github.ref == 'refs/heads/main' && secrets.PROD_BRANCH || secrets.DEV_BRANCH }}
