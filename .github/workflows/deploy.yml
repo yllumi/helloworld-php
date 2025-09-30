@@ -33,28 +33,28 @@ jobs:
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       # Cara A (direkomendasikan): gunakan action resmi Deployer untuk menjalankan 'dep deploy'
-      - name: Deploy
-        uses: deployphp/action@v1.0.23   # pin ke rilis terbaru v1
-        with:
-          dep: deploy
-          # php-binary: "php"   # opsional; bisa dihapus karena default = php
-          # HAPUS baris 'composer:' kalau ada — input ini TIDAK didukung
-          known-hosts: |
-            ${{ secrets.SSH_KNOWN_HOSTS }}   # atau isi hasil `ssh-keyscan HOST`
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          BRANCH: ${{ secrets.BRANCH }}
-
-
-      # Cara B (alternatif manual): jalankan perintah dep langsung
-      # - name: Deploy (manual)
-      #   run: vendor/bin/dep deploy -vvv
+      # - name: Deploy
+      #   uses: deployphp/action@v1.0.23   # pin ke rilis terbaru v1
+      #   with:
+      #     dep: deploy
+      #     # php-binary: "php"   # opsional; bisa dihapus karena default = php
+      #     # HAPUS baris 'composer:' kalau ada — input ini TIDAK didukung
+      #     known-hosts: |
+      #       ${{ secrets.SSH_KNOWN_HOSTS }}   # atau isi hasil `ssh-keyscan HOST`
       #   env:
       #     SSH_HOST: ${{ secrets.SSH_HOST }}
       #     SSH_USER: ${{ secrets.SSH_USER }}
       #     SSH_PORT: ${{ secrets.SSH_PORT }}
       #     DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
       #     BRANCH: ${{ secrets.BRANCH }}
+
+
+      # Cara B (alternatif manual): jalankan perintah dep langsung
+      - name: Deploy (manual)
+        run: vendor/bin/dep deploy -vvv
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          BRANCH: ${{ secrets.BRANCH }}
