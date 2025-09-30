@@ -37,7 +37,7 @@ jobs:
       - name: Sanity check: list keys loaded
         run: ssh-add -l
 
-      - name: Sanity check: try SSH to server (no command)
+      - name: Sanity check - try SSH to server (no command)
         run: |
           ssh -vvv -o StrictHostKeyChecking=yes -p "${{ secrets.SSH_PORT }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" true
