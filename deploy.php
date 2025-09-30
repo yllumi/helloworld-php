@@ -13,9 +13,13 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('')
-    ->set('remote_user', 'deployer')
-    ->set('deploy_path', '~/helloworld');
+// Host (ambil dari env GitHub Actions)
+host('prod')
+    ->setHostname(getenv('SSH_HOST') ?: '159.65.8.203')
+    ->setRemoteUser(getenv('SSH_USER') ?: 'deployer')
+    ->setPort((int)(getenv('SSH_PORT') ?: 22))
+    ->set('branch', getenv('BRANCH') ?: 'main')
+    ->set('deploy_path', getenv('DEPLOY_PATH') ?: '/var/www/helloworld');
 
 // Hooks
 
