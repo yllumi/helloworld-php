@@ -26,35 +26,28 @@ jobs:
       - name: Start ssh-agent and add key
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      # (Opsional tapi dianjurkan) tambah host key agar StrictHostKeyChecking tidak error
-      - name: Add known_hosts
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # pasangan dari public key yang ada di server (~deployer/.ssh/authorized_keys)
+
+      - name: Add known_hosts (host key)
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      # Cara A (direkomendasikan): gunakan action resmi Deployer untuk menjalankan 'dep deploy'
-      # - name: Deploy
-      #   uses: deployphp/action@v1.0.23   # pin ke rilis terbaru v1
-      #   with:
-      #     dep: deploy
-      #     # php-binary: "php"   # opsional; bisa dihapus karena default = php
-      #     # HAPUS baris 'composer:' kalau ada — input ini TIDAK didukung
-      #     known-hosts: |
-      #       ${{ secrets.SSH_KNOWN_HOSTS }}   # atau isi hasil `ssh-keyscan HOST`
-      #   env:
-      #     SSH_HOST: ${{ secrets.SSH_HOST }}
-      #     SSH_USER: ${{ secrets.SSH_USER }}
-      #     SSH_PORT: ${{ secrets.SSH_PORT }}
-      #     DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      #     BRANCH: ${{ secrets.BRANCH }}
+      # --- TES KERAS: pastikan koneksi SSH benar-benar bisa tanpa password ---
+      - name: Sanity check: list keys loaded
+        run: ssh-add -l
 
+      - name: Sanity check: try SSH to server (no command)
+        run: |
+          ssh -vvv -o StrictHostKeyChecking=yes -p "${{ secrets.SSH_PORT }}" \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" true
 
-      # Cara B (alternatif manual): jalankan perintah dep langsung
-      - name: Deploy (manual)
-        run: vendor/bin/dep deploy -vvv
+      # Cara manual pakai PHAR yang sudah kamu unduh:
+      - name: Deploy (Deployer PHAR)
+        run: php ./deployer.phar deploy --no-interaction -vvv
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}   # ex: deployer
+          SSH_PORT: ${{ secrets.SSH_PORT }}   # ex: 22
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           BRANCH: ${{ secrets.BRANCH }}
