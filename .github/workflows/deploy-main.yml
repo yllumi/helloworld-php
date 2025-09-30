@@ -19,19 +19,25 @@ jobs:
     #     tools: composer
     #     extensions: mbstring, intl, curl, zip
 
+    # Install Composer secara manual
+    - name: Install Composer
+      run: |
+        curl -sS https://getcomposer.org/installer | php
+        sudo mv composer.phar /usr/local/bin/composer
+        
     # >>> PENTING: JANGAN --no-dev (agar Deployer terpasang di vendor)
     - name: Install dependencies (with dev)
       run: composer install --prefer-dist --no-progress --no-interaction
 
-    # - name: Start ssh-agent and add key
-    #   uses: webfactory/ssh-agent@v0.9.0
-    #   with:
-    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Start ssh-agent and add key
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    # - name: Add known_hosts (host key)
-    #   run: |
-    #     mkdir -p ~/.ssh
-    #     ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+    - name: Add known_hosts (host key)
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
     # - name: Sanity check - list keys loaded
     #   run: ssh-add -l
