@@ -14,13 +14,13 @@ add('writable_dirs', []);
 // Hosts
 
 // Host (ambil dari env GitHub Actions)
-host('prod')
+host('main')
     ->setHostname('159.65.8.203')
     ->setRemoteUser('deployer')
     ->setPort(22)
     ->set('branch', 'main')
     ->set('deploy_path', '/var/www/helloworld')
-    ->set('stage', 'prod');
+    ->set('stage', 'main');
 
 // Tentukan host untuk development
 host('dev')

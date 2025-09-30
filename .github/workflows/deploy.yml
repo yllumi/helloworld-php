@@ -42,10 +42,7 @@ jobs:
           "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" true
 
     - name: Deploy (vendor/bin/dep)
-      run: vendor/bin/dep deploy -vvv --no-interaction
-      env:
-        SSH_HOST: ${{ secrets.SSH_HOST }}
-        SSH_USER: ${{ secrets.SSH_USER }}
-        SSH_PORT: ${{ secrets.SSH_PORT }}
-        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-        BRANCH: ${{ github.ref == 'refs/heads/main' && secrets.PROD_BRANCH || secrets.DEV_BRANCH }}
+      run: |
+        BRANCH_NAME=$(echo "${GITHUB_REF}" | sed 's/refs\/heads\///')
+        echo "Deploying branch: $BRANCH_NAME"
+          php vendor/bin/dep deploy ${BRANCH_NAME} -vvv --no-interaction
