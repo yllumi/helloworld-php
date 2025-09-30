@@ -34,7 +34,7 @@ jobs:
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       # --- TES KERAS: pastikan koneksi SSH benar-benar bisa tanpa password ---
-      - name: Sanity check: list keys loaded
+      - name: Sanity check - list keys loaded
         run: ssh-add -l
 
       - name: Sanity check - try SSH to server (no command)
