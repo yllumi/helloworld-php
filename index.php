@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Demo Deployer with Github Actions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 
@@ -12,6 +12,9 @@
     <div class="container">
 
         <h1>Hello, world!</h1>
+        <p>
+            Intinya kalau pake Github Actions itu kita minta si gha buat ssh ke server dan running command deploy di server.
+        </p>
 
         <?php
         // show error reporting
