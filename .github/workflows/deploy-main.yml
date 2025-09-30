@@ -19,11 +19,18 @@ jobs:
     #     tools: composer
     #     extensions: mbstring, intl, curl, zip
 
-    # Install Composer secara manual
-    - name: Install Composer
+    # Cek apakah Composer sudah terinstal
+    - name: Check if Composer is installed
+      id: composer_check
       run: |
-        curl -sS https://getcomposer.org/installer | php
-        sudo mv composer.phar /usr/local/bin/composer
+        if ! command -v composer &> /dev/null
+        then
+          echo "Composer not found. Installing Composer..."
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+        else
+          echo "Composer is already installed"
+        fi
         
     # >>> PENTING: JANGAN --no-dev (agar Deployer terpasang di vendor)
     - name: Install dependencies (with dev)

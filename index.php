@@ -15,6 +15,7 @@
         <p>
             Intinya kalau pake Github Actions itu kita minta si gha buat ssh ke server dan running command deploy di server.
         </p>
+        <p>Mantaaap!</p>
 
         <?php
         // show error reporting
